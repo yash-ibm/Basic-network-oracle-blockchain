@@ -1,0 +1,83 @@
+{
+    "name": "fabric-network",
+    "x-type": "hlfv1",
+    "version": "1.0.0",
+    "peers": {
+        "supplier1.retailer-org.PO.com": {
+            "url": "grpc://localhost:7051",
+            "eventUrl": "grpc://localhost:7053"
+        },
+        "supplier2.retailer-org.PO.com": {
+            "url": "grpc://localhost:8051",
+            "eventUrl": "grpc://localhost:8053"
+        },
+        "supplier3.retailer-org.PO.com": {
+            "url": "grpc://localhost:9051",
+            "eventUrl": "grpc://localhost:9053"
+        }
+
+
+    },
+    "certificateAuthorities": {
+        "ca.PO.com": {
+            "url": "http://localhost:7054",
+            "caName": "ca.PO.com"
+        }
+    },
+    "orderers": {
+        "orderer.PO.com": {
+            "url": "grpc://localhost:7050"
+        }
+    },
+    "organizations": {
+        "RetailerOrg": {
+            "mspid": "RetailerOrgMSP",
+            "peers": [
+                "supplier1.retailer-org.PO.com",
+		"supplier2.retailer-org.PO.com",
+		"supplier3.retailer-org.PO.com"
+            ],
+            "certificateAuthorities": [
+                "ca.PO.com"
+            ]
+        }
+    },
+    "channels": {
+        "mychannel": {
+            "orderers": [
+                "orderer.PO.com"
+            ],
+            "peers": {
+                "supplier1.retailer-org.PO.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },
+                "supplier2.retailer-org.PO.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                },
+                "supplier3.retailer-org.PO.com": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+    "client": {
+        "organization": "RetailerOrg",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300",
+                    "eventHub": "300",
+                    "eventReg": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    }
+}
+
